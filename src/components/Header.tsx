@@ -2,28 +2,53 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Wallet, Copy } from "lucide-react";
-import { useState } from "react";
+import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 export function Header() {
-  const [isConnected, setIsConnected] = useState(false);
-  const [network, setNetwork] = useState("ethereum");
-  const walletAddress = "0x742d...9f3a";
+  const { address, isConnected, chain } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
+  const { switchChain } = useSwitchChain();
+
+  const formatAddress = (addr: string) => {
+    return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+  };
 
   const handleConnect = () => {
-    setIsConnected(true);
-    toast.success("Wallet connected successfully");
+    const walletConnectConnector = connectors.find(
+      (connector) => connector.id === "walletConnect"
+    );
+    if (walletConnectConnector) {
+      connect({ connector: walletConnectConnector });
+    } else {
+      // Fallback to first available connector
+      connect({ connector: connectors[0] });
+    }
   };
 
   const handleDisconnect = () => {
-    setIsConnected(false);
+    disconnect();
     toast.info("Wallet disconnected");
   };
 
   const copyAddress = () => {
-    navigator.clipboard.writeText("0x742d35Cc6634C0532925a3b844Bc9e7595f9f3a");
-    toast.success("Address copied to clipboard");
+    if (address) {
+      navigator.clipboard.writeText(address);
+      toast.success("Address copied to clipboard");
+    }
   };
+
+  const handleNetworkChange = (chainId: string) => {
+    switchChain({ chainId: parseInt(chainId) });
+  };
+
+  useEffect(() => {
+    if (isConnected && address) {
+      toast.success("Wallet connected successfully");
+    }
+  }, [isConnected, address]);
 
   return (
     <header className="h-16 border-b border-border bg-card flex items-center justify-between px-6">
@@ -32,20 +57,25 @@ export function Header() {
       </div>
       
       <div className="flex items-center gap-4">
-        <Select value={network} onValueChange={setNetwork}>
-          <SelectTrigger className="w-[160px] bg-secondary border-border">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="bg-popover border-border">
-            <SelectItem value="ethereum">Ethereum</SelectItem>
-            <SelectItem value="polygon">Polygon</SelectItem>
-            <SelectItem value="arbitrum">Arbitrum</SelectItem>
-            <SelectItem value="optimism">Optimism</SelectItem>
-            <SelectItem value="bsc">BSC</SelectItem>
-          </SelectContent>
-        </Select>
+        {isConnected && (
+          <Select 
+            value={chain?.id.toString()} 
+            onValueChange={handleNetworkChange}
+          >
+            <SelectTrigger className="w-[160px] bg-secondary border-border">
+              <SelectValue placeholder={chain?.name || "Select Network"} />
+            </SelectTrigger>
+            <SelectContent className="bg-popover border-border">
+              <SelectItem value="1">Ethereum</SelectItem>
+              <SelectItem value="137">Polygon</SelectItem>
+              <SelectItem value="42161">Arbitrum</SelectItem>
+              <SelectItem value="10">Optimism</SelectItem>
+              <SelectItem value="56">BSC</SelectItem>
+            </SelectContent>
+          </Select>
+        )}
 
-        {isConnected ? (
+        {isConnected && address ? (
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
@@ -53,7 +83,7 @@ export function Header() {
               onClick={copyAddress}
               className="font-mono text-sm"
             >
-              {walletAddress}
+              {formatAddress(address)}
               <Copy className="ml-2 h-3 w-3" />
             </Button>
             <Button
