@@ -1,73 +1,101 @@
-# Welcome to your Lovable project
+Of course, here is a standard README.md for the Gas Optimizer project.
 
-## Project info
+***
 
-**URL**: https://lovable.dev/projects/6b8d617b-ebfe-4d1e-8a6c-94c6916873bd
+# Gas Optimizer
 
-## How can I edit this code?
+Gas Optimizer is a web application designed to help users monitor, analyze, and optimize transaction costs on various blockchain networks. It provides real-time gas fee data, historical trend analysis, a transaction simulator, and customizable alerts to help users save money on transaction fees.
 
-There are several ways of editing your application.
+## Key Features
 
-**Use Lovable**
+*   **Real-time Dashboard**: View current gas fees for low, average, and high-priority transactions.
+*   **Historical Analytics**: Analyze gas fee trends over different timeframes with interactive charts and a weekly heatmap.
+*   **Transaction Simulator**: Estimate the cost of various transaction types (e.g., ETH Transfer, Uniswap Swap, NFT Mint) before execution.
+*   **Custom Alerts**: Set up email and browser notifications for when gas prices cross specific thresholds.
+*   **Multi-Network Support**: Easily switch between supported blockchain networks like Ethereum, Polygon, Arbitrum, and more.
+*   **Wallet Integration**: Connect your wallet to interact with the application seamlessly.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/6b8d617b-ebfe-4d1e-8a6c-94c6916873bd) and start prompting.
+## Technologies Used
 
-Changes made via Lovable will be committed automatically to this repo.
+This project is built with a modern web development stack:
 
-**Use your preferred IDE**
+*   **Vite**: A next-generation frontend build tool.
+*   **React**: A JavaScript library for building user interfaces.
+*   **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+*   **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+*   **shadcn/ui**: A collection of re-usable UI components.
+*   **Wagmi**: React Hooks for Ethereum, simplifying wallet and blockchain interactions.
+*   **Recharts**: A composable charting library built on React components.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Getting Started
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+To get a local copy up and running, follow these simple steps.
 
-Follow these steps:
+### Prerequisites
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+You need to have [Node.js](https://nodejs.org/) (version 18.x or later) and [npm](https://www.npmjs.com/) installed on your machine.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+### Installation
 
-# Step 3: Install the necessary dependencies.
-npm i
+1.  **Clone the repository:**
+    ```sh
+    git clone https://your-repository-url/gas-optimizer.git
+    cd gas-optimizer
+    ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+2.  **Install NPM packages:**
+    ```sh
+    npm install
+    ```
+
+3.  **Set up environment variables:**
+    Create a `.env` file in the root of the project by copying the example file:
+    ```sh
+    cp .env.example .env
+    ```
+    You will need to add a WalletConnect Project ID to the `.env` file. You can get one from [WalletConnect Cloud](https://cloud.walletconnect.com).
+    ```
+    VITE_WALLETCONNECT_PROJECT_ID=your_project_id_here
+    ```
+
+4.  **Run the development server:**
+    ```sh
+    npm run dev
+    ```
+    The application will be available at `http://localhost:8080`.
+
+## Available Scripts
+
+In the project directory, you can run:
+
+*   `npm run dev`: Runs the app in development mode.
+*   `npm run build`: Builds the app for production to the `dist` folder.
+*   `npm run lint`: Lints the project files for code quality and errors.
+*   `npm run preview`: Serves the production build locally to preview it.
+
+## Project Structure
+
+The project structure is organized as follows:
+
+```
+/src
+├── components/   # Reusable components (UI elements, charts, cards)
+├── config/       # Configuration files (e.g., wagmi)
+├── hooks/        # Custom React hooks
+├── lib/          # Utility functions
+└── pages/        # Page components corresponding to routes
 ```
 
-**Edit a file directly in GitHub**
+## Deployment
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+This project is configured to be easily deployed on any static site hosting service like Vercel, Netlify, or GitHub Pages.
 
-**Use GitHub Codespaces**
+1.  Run the build command:
+    ```sh
+    npm run build
+    ```
+2.  Deploy the contents of the generated `dist` directory to your hosting provider.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## License
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/6b8d617b-ebfe-4d1e-8a6c-94c6916873bd) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is licensed under the MIT License - see the `LICENSE` file for details.
