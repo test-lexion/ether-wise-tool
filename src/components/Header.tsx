@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Wallet, Copy } from "lucide-react";
-import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useSwitchChain, useChains } from "wagmi";
 import { toast } from "sonner";
 import { useEffect } from "react";
 
@@ -11,6 +11,7 @@ export function Header() {
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const { switchChain } = useSwitchChain();
+  const chains = useChains(); // Get the list of configured chains
 
   const formatAddress = (addr: string) => {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
@@ -66,11 +67,11 @@ export function Header() {
               <SelectValue placeholder={chain?.name || "Select Network"} />
             </SelectTrigger>
             <SelectContent className="bg-popover border-border">
-              <SelectItem value="1">Ethereum</SelectItem>
-              <SelectItem value="137">Polygon</SelectItem>
-              <SelectItem value="42161">Arbitrum</SelectItem>
-              <SelectItem value="10">Optimism</SelectItem>
-              <SelectItem value="56">BSC</SelectItem>
+              {chains.map((c) => (
+                <SelectItem key={c.id} value={c.id.toString()}>
+                  {c.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         )}
