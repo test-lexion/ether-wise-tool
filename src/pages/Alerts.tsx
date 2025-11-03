@@ -14,15 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Bell, Trash2, Edit, Pause, Play, Plus } from "lucide-react";
 import { toast } from "sonner";
-
-interface Alert {
-  id: string;
-  condition: string;
-  threshold: number;
-  email: boolean;
-  push: boolean;
-  active: boolean;
-}
+import { Alert } from "@/types"; // Import the centralized type
 
 const Alerts = () => {
   const [alerts, setAlerts] = useState<Alert[]>([
@@ -59,7 +51,7 @@ const Alerts = () => {
 
     const alert: Alert = {
       id: Date.now().toString(),
-      condition: newAlert.condition,
+      condition: newAlert.condition as "below" | "above",
       threshold: parseFloat(newAlert.threshold),
       email: newAlert.email,
       push: newAlert.push,
