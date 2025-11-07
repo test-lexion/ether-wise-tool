@@ -1,4 +1,3 @@
-Of course, here is a standard README.md for the Gas Optimizer project.
 
 ***
 
