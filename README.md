@@ -86,7 +86,6 @@ The project structure is organized as follows:
 ```
 
 ## Deployment
-
 This project is configured to be easily deployed on any static site hosting service like Vercel, Netlify, or GitHub Pages.
 
 1.  Run the build command:
